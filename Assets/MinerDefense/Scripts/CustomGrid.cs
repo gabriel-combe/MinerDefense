@@ -28,4 +28,23 @@ public class CustomGrid<TGridObject>
             }
         }
     }
+
+    public TGridObject GetGridObject(int x, int y)
+    {
+        if (x < 0 || y < 0 || x >= this.width || y >= this.height)
+            return default(TGridObject);
+
+        return gridArray[x, y];
+    }
+
+    public Vector3 GetWorldPosition(int x, int y)
+    {
+        return new Vector3(x, y) * this.cellSize + this.originPosition;
+    }
+
+    public void GetXY(Vector3 worldPosition, out int x, out int y)
+    {
+        x = (int)((worldPosition - originPosition).x / this.cellSize);
+        y = (int)((worldPosition - originPosition).y / this.cellSize);
+    }
 }
