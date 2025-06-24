@@ -29,7 +29,7 @@ public class GridManager : MonoBehaviour
 
         for (int x = 0; x < width; x++)
             for (int y = 0; y < height; y++)
-                Instantiate(backgroundTile, grid.GetWorldPosition(x, y), Quaternion.identity, backgroundTileParent.transform);
+                Instantiate(backgroundTile, grid.GetWorldPosition(x, y) + new Vector3(0, 0, 1), Quaternion.identity, backgroundTileParent.transform);
     }
 
     public class GridTile
@@ -49,6 +49,7 @@ public class GridManager : MonoBehaviour
         public void SetBuildingObject(BuildingObject buildingObject)
         {
             this.buildingObject = buildingObject;
+            this.buildingObject.SetOrigin(new Vector2Int(x, y));
         }
 
         public void ClearBuildingObject()
@@ -73,5 +74,26 @@ public class GridManager : MonoBehaviour
             if (!grid.GetGridObject(gridPosition.x, gridPosition.y).CanBuild()) return false;
 
         return true;
+    }
+
+    public Vector3 AlignToGrid(Vector3 position)
+    {
+        grid.GetXY(position, out int x, out int y);
+        
+        if (x == -1 || y == -1) return position;
+
+        return grid.GetWorldPosition(x, y);
+    }
+
+    public void PlaceBuilding(BuildingObject buildingObject)
+    {
+        grid.GetXY(buildingObject.transform.position, out int xPos, out int yPos);
+
+        List<Vector2Int> gridPositionList = buildingObject.GetBuildingType().GetGridPositionList(new Vector2Int(xPos, yPos));
+
+        foreach (Vector2Int gridPosition in gridPositionList)
+            grid.GetGridObject(gridPosition.x, gridPosition.y).SetBuildingObject(buildingObject);
+
+        buildingObject.OnPlaced();
     }
 }

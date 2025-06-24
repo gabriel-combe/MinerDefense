@@ -11,6 +11,9 @@ public class BuildingButton : MonoBehaviour, IPointerDownHandler
     private GoldManager goldManager;
 
     [SerializeField]
+    private BuildingDragDropManager dragDropManager;
+
+    [SerializeField]
     private TextMeshProUGUI costText;
 
     [SerializeField]
@@ -39,7 +42,9 @@ public class BuildingButton : MonoBehaviour, IPointerDownHandler
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        Debug.Log("AAAAAAAAAAAAAAAA");
+        if (!button.interactable) return;
+
+        dragDropManager.StartPlacingBuilding(building, this);
     }
 
     // Remove cost from the gold
