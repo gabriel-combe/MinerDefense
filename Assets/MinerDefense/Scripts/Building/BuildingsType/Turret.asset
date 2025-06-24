@@ -10,9 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f58b72b9daea2794ba3e1f062ca9ce19, type: 3}
-  m_Name: Mine
+  m_Name: Turret
   m_EditorClassIdentifier: 
-  nameString: Mine
+  nameString: Turret
   prefab: {fileID: 0}
   width: 1
   height: 1
+  startingCost: 1

@@ -9,6 +9,7 @@ public class BuildingTypeSO : ScriptableObject
     public GameObject prefab;
     public int width;
     public int height;
+    public int startingCost;
 
     public List<Vector2Int> GetGridPositionList(Vector2Int position)
     {

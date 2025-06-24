@@ -25,6 +25,11 @@ public class GoldManager : MonoBehaviour
         this.gold += gold;
         UpdateGoldText();
     }
+    public void RemoveGold(int gold)
+    {
+        this.gold -= gold;
+        UpdateGoldText();
+    }
 
     public void UpdateGoldText()
     {

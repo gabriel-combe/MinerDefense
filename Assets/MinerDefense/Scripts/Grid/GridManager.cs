@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class GridManager : MonoBehaviour
 {
@@ -23,6 +24,7 @@ public class GridManager : MonoBehaviour
     {
         grid = new CustomGrid<GridTile>(width, height, cellSize, originPosition, (CustomGrid<GridTile> g, int x, int y) => new GridTile(g, x, y));
 
+        // Display empty tile to show possible placements
         GameObject backgroundTileParent = new GameObject("BackgroundTileGroup");
 
         for (int x = 0; x < width; x++)
@@ -51,20 +53,25 @@ public class GridManager : MonoBehaviour
 
         public void ClearBuildingObject()
         {
-            this.buildingObject = null;
+            buildingObject = null;
         }
 
         public bool CanBuild()
         {
-            return this.buildingObject == null;
+            return buildingObject == null;
         }
     }
 
-    private void Update()
+    public bool IsPlacementValid(Vector3 buildingPosition, BuildingTypeSO buildingData)
     {
-        //if (false)
-        //{
-        //    //grid.GetXY(, out int x, out int y);
-        //}
+        grid.GetXY(buildingPosition, out int xPos, out int yPos);
+
+        List<Vector2Int> gridPositionList = buildingData.GetGridPositionList(new Vector2Int(xPos, yPos));
+
+        // Check if we can build at this position on the grid
+        foreach(Vector2Int gridPosition in gridPositionList)
+            if (!grid.GetGridObject(gridPosition.x, gridPosition.y).CanBuild()) return false;
+
+        return true;
     }
 }

@@ -46,5 +46,8 @@ public class CustomGrid<TGridObject>
     {
         x = (int)((worldPosition - originPosition).x / this.cellSize);
         y = (int)((worldPosition - originPosition).y / this.cellSize);
+
+        if (x < 0 || x >= this.width) x = -1;
+        if (y < 0 || y >= this.height) y = -1;
     }
 }

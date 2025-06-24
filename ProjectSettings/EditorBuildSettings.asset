@@ -12,4 +12,7 @@ EditorBuildSettings:
     path: Assets/MinerDefense/Levels/Game.unity
     guid: 86d2fadfd22f56c4d8b9332c8513c945
   m_configObjects:
+    com.unity.adaptiveperformance.google.android.provider_settings: {fileID: 11400000, guid: 92828b3ecbf240146adc87ed82771d2a, type: 2}
+    com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: 2a1ff25ce40170845ad835d0b502882e, type: 2}
+    com.unity.adaptiveperformance.samsung.android.provider_settings: {fileID: 11400000, guid: 286e1beaee9754246ae59ffe837500cb, type: 2}
     com.unity.adaptiveperformance.simulator.provider_settings: {fileID: 11400000, guid: df0841d2c0bab7e4ab09a8f8f1995eae, type: 2}
