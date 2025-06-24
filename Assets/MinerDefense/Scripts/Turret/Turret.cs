@@ -6,6 +6,8 @@ public class Turret : BuildingObject
 {
     [SerializeField]
     private GameObject bulletPrefab;
+    [SerializeField]
+    private Transform bulletSpawnPoint;
 
     // Turret Properties
     private int damage;
@@ -74,6 +76,9 @@ public class Turret : BuildingObject
 
     void Shoot(Transform target)
     {
-        GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
+        Bullet bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, Quaternion.identity).GetComponent<Bullet>();
+        bullet.target = target;
+
+        Destroy(bullet.gameObject, 8f);
     }
 }

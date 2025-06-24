@@ -48,7 +48,7 @@ public class BuildingDragDropManager : MonoBehaviour
 
     private void HandleFingerUpdate(LeanFinger finger)
     {
-        if (!isDragging) return;
+        if (!isDragging || currentBuilding == null) return;
 
         // Snap to grid if the aligned position is valid otherwise follow the finger
         Debug.Log(finger.GetWorldPosition(10));
