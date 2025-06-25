@@ -23,7 +23,7 @@ public class Bullet : MonoBehaviour
     // On collision with an enemy the bullet is destroyed and the enemy take some damage
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log(collision.collider.tag);
+        Debug.Log("AAAAAAAAAAAAAAAA");
         if (!collision.collider.CompareTag("Enemy")) return;
         
         Enemy enemy = collision.transform.GetComponent<Enemy>();
