@@ -9,6 +9,10 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private int dollars;
 
+    [Header("Default Background Skin")]
+    [SerializeField]
+    private BackgroundSkinsTypeSO defaultBackgroundSkin;
+
     [Header("Base Stats")]
     [SerializeField]
     private int goldBase = 7;
@@ -40,6 +44,7 @@ public class GameManager : MonoBehaviour
         public int buildingLifeLevel;
         public int turretDamageLevel;
         public int turretAttackSpeedLevel;
+        public BackgroundSkinsTypeSO backgroundSkin;
     }
 
     // Keep the game manager between scenes
@@ -64,6 +69,7 @@ public class GameManager : MonoBehaviour
             saveData.buildingLifeLevel = 0;
             saveData.turretDamageLevel = 0;
             saveData.turretAttackSpeedLevel = 0;
+            saveData.backgroundSkin = defaultBackgroundSkin;
             Save();
         }
     }
@@ -98,6 +104,7 @@ public class GameManager : MonoBehaviour
     public int GetBuildingLife() { return buildingLifeBase + (saveData.buildingLifeLevel * buildingLifeIncr); }
     public int GetTurretDamage() { return turretDamageBase + (saveData.turretDamageLevel * turretDamageIncr); }
     public float GetTurretAttackSpeed() { return turretAttackSpeedBase + (saveData.turretAttackSpeedLevel * turretAttackSpeedIncr); }
+    public BackgroundSkinsTypeSO GetBackgroundSkin() { return saveData.backgroundSkin; }
 
 
     // Data update
@@ -106,6 +113,7 @@ public class GameManager : MonoBehaviour
     public void UpgradeBuildingLife() { saveData.buildingLifeLevel++; }
     public void UpgradeTurretDamage() { saveData.turretDamageLevel++; }
     public void UpgradeTurretAttackSpeed() { saveData.turretAttackSpeedLevel++; }
+    public void ChangeBackgroundSkin(BackgroundSkinsTypeSO backgroundSkin) { saveData.backgroundSkin = backgroundSkin; }
     public bool RemoveDollars(int dollars) {
         if (saveData.dollars < dollars) return false;
 
