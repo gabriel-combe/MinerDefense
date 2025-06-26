@@ -17,6 +17,11 @@ public class DollarDisplay : MonoBehaviour
         UpdateDollarsText();
     }
 
+    private void Update()
+    {
+        UpdateDollarsText();
+    }
+
     public void UpdateDollarsText()
     {
         dollarsText.text = gameManager.GetDollars().ToString() + " $";

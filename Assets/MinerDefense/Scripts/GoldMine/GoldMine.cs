@@ -16,11 +16,15 @@ public class GoldMine : BuildingObject
 
     public override void OnPlaced()
     {
+        base.OnPlaced();
+
         InvokeRepeating(nameof(GenerateGold), 1f, 1f);
     }
 
     public override void OnMoved()
     {
+        base.OnMoved();
+
         CancelInvoke();
     }
 

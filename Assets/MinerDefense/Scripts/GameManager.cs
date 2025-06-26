@@ -13,11 +13,11 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private int goldBase = 7;
     [SerializeField]
-    private int buildingLifeBase = 50;
+    private int buildingLifeBase = 20;
     [SerializeField]
-    private int turretDamageBase = 10;
+    private int turretDamageBase = 5;
     [SerializeField]
-    private float turretAttackSpeedBase = 1f;
+    private float turretAttackSpeedBase = 0.25f;
 
     [Header("Stats Increment")]
     [SerializeField]
@@ -27,10 +27,8 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private int turretDamageIncr = 2;
     [SerializeField]
-    private float turretAttackSpeedIncr = 0.4f;
+    private float turretAttackSpeedIncr = 0.1f;
 
-    [Header("Stats upgrade")]
-    [SerializeField]
     private static GameSaveData saveData = new GameSaveData();
 
     // Data to save
@@ -38,10 +36,10 @@ public class GameManager : MonoBehaviour
     public struct GameSaveData
     {
         public int dollars;
-        public int startingGold;
-        public int buildingLife;
-        public int turretDamage;
-        public float turretAttackSpeed;
+        public int startingGoldLevel;
+        public int buildingLifeLevel;
+        public int turretDamageLevel;
+        public int turretAttackSpeedLevel;
     }
 
     // Keep the game manager between scenes
@@ -50,9 +48,9 @@ public class GameManager : MonoBehaviour
         GameObject[] objs = GameObject.FindGameObjectsWithTag("GameManager");
 
         if(objs.Length > 1)
-            Destroy(this.gameObject);
+            Destroy(gameObject);
     
-        DontDestroyOnLoad(this.gameObject);
+        DontDestroyOnLoad(gameObject);
     }
 
     private void Start()
@@ -62,10 +60,10 @@ public class GameManager : MonoBehaviour
             Load();
         } else {
             saveData.dollars = 0;
-            saveData.startingGold = goldBase;
-            saveData.buildingLife = buildingLifeBase;
-            saveData.turretDamage = turretDamageBase;
-            saveData.turretAttackSpeed = turretAttackSpeedBase;
+            saveData.startingGoldLevel = 0;
+            saveData.buildingLifeLevel = 0;
+            saveData.turretDamageLevel = 0;
+            saveData.turretAttackSpeedLevel = 0;
             Save();
         }
     }
@@ -92,18 +90,22 @@ public class GameManager : MonoBehaviour
 
     // Data getter
     public int GetDollars() { return  saveData.dollars; }
-    public int GetStartingGold() { return saveData.startingGold; }
-    public int GetBuildingLife() { return saveData.buildingLife; }
-    public int GetTurretDamage() { return saveData.turretDamage; }
-    public float GetTurretAttackSpeed() { return saveData.turretAttackSpeed; }
+    public int GetStartingGoldLevel() { return saveData.startingGoldLevel; }
+    public int GetBuildingLifeLevel() { return saveData.buildingLifeLevel; }
+    public int GetTurretDamageLevel() { return saveData.turretDamageLevel; }
+    public int GetTurretAttackSpeedLevel() { return saveData.turretAttackSpeedLevel; }
+    public int GetStartingGold() { return goldBase + (saveData.startingGoldLevel * goldIncr); }
+    public int GetBuildingLife() { return buildingLifeBase + (saveData.buildingLifeLevel * buildingLifeIncr); }
+    public int GetTurretDamage() { return turretDamageBase + (saveData.turretDamageLevel * turretDamageIncr); }
+    public float GetTurretAttackSpeed() { return turretAttackSpeedBase + (saveData.turretAttackSpeedLevel * turretAttackSpeedIncr); }
 
 
     // Data update
-    public void AddDollars(int dollars) { saveData.dollars = dollars; }
-    public void UpgradeStartingGold() { saveData.startingGold += goldIncr; }
-    public void UpgradeBuildingLife() { saveData.buildingLife += buildingLifeIncr; }
-    public void UpgradeTurretDamage() { saveData.turretDamage += turretDamageIncr; }
-    public void UpgradeTurretAttackSpeed() { saveData.turretAttackSpeed += turretAttackSpeedIncr; }
+    public void AddDollars(int dollars) { saveData.dollars += dollars; }
+    public void UpgradeStartingGold() { saveData.startingGoldLevel++; }
+    public void UpgradeBuildingLife() { saveData.buildingLifeLevel++; }
+    public void UpgradeTurretDamage() { saveData.turretDamageLevel++; }
+    public void UpgradeTurretAttackSpeed() { saveData.turretAttackSpeedLevel++; }
     public bool RemoveDollars(int dollars) {
         if (saveData.dollars < dollars) return false;
 

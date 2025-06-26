@@ -30,7 +30,7 @@ public class BuildingDragDropManager : MonoBehaviour
 
     public void StartPlacingBuilding(BuildingTypeSO building, BuildingButton button)
     {
-        if (currentBuilding != null) Destroy(currentBuilding);
+        if (currentBuilding != null) Destroy(currentBuilding.gameObject);
 
         currentBuildingData = building;
         currentBuilding = BuildingObject.Create(building);
@@ -51,8 +51,7 @@ public class BuildingDragDropManager : MonoBehaviour
         if (!isDragging || currentBuilding == null) return;
 
         // Snap to grid if the aligned position is valid otherwise follow the finger
-        Debug.Log(finger.GetWorldPosition(10));
-        Vector3 alignedPos = gridManager.AlignToGrid(finger.GetWorldPosition(10));
+        Vector3 alignedPos = gridManager.AlignToGrid(finger.GetWorldPosition(10), currentBuildingData);
 
         currentBuilding.transform.position = alignedPos;
     }
@@ -61,19 +60,20 @@ public class BuildingDragDropManager : MonoBehaviour
     // Otherwise destroy the dragged building and keep the cost as it is
     private void HandleFingerUp(LeanFinger finger)
     {
-        if (!isDragging) return;
+        if (!isDragging || currentBuilding == null) return;
+
 
         if (gridManager.IsPlacementValid(currentBuilding.transform.position, currentBuildingData))
         {
             gridManager.PlaceBuilding(currentBuilding);
+            currentBuilding = null;
 
             currentButton.OnPlaced();
         } else
         {
-            Destroy(currentBuilding.GetBuildingGameObject());
+            Destroy(currentBuilding.gameObject);
         }
 
-        currentBuilding = null;
         currentButton = null;
 
         isDragging = false;

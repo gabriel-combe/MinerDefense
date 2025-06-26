@@ -10,19 +10,16 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private int damage = 5;
     [SerializeField]
-    private float walkSpeed = 5f;
+    private float walkSpeed = 0.5f;
 
     private Transform target;
 
     private void Update()
     {
-        if (target == null)
-        {
-            target = FindClosestBuilding();
+        target = FindClosestBuilding();
 
-            if (target != null)
-                transform.position = Vector3.Lerp(transform.position, target.position, walkSpeed * Time.deltaTime);
-        }
+        if (target != null)
+            transform.position += (target.position - transform.position).normalized * walkSpeed * Time.deltaTime;
     }
 
     Transform FindClosestBuilding()
@@ -34,6 +31,9 @@ public class Enemy : MonoBehaviour
 
         foreach (var building in buildings)
         {
+            // If the building is currently being dragged, skip it
+            if (!building.GetComponent<BuildingObject>().IsOnGrid()) continue;
+
             float dist = Vector3.Distance(transform.position, building.transform.position);
             if (dist < shortestDist)
             {
@@ -54,11 +54,14 @@ public class Enemy : MonoBehaviour
     }
 
     // On collision the enemy with a building the enemy is destroyed and the building take some damage
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!collision.collider.CompareTag("Building")) return;
+        if (!collision.CompareTag("Building")) return;
         
         BuildingObject building = collision.gameObject.GetComponent<BuildingObject>();
+
+        if (!building.IsOnGrid()) return;
+
         building.TakeDamage(damage);
 
         Destroy(gameObject);

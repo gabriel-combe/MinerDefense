@@ -25,15 +25,22 @@ public class Turret : BuildingObject
 
         damage = gameManager.GetTurretDamage();
         attackSpeed = gameManager.GetTurretAttackSpeed();
+
+        Debug.Log(damage);
+        Debug.Log(gameManager.GetTurretAttackSpeedLevel());
     }
 
     public override void OnPlaced()
     {
+        base.OnPlaced();
+
         isTurretActive = true;
     }
 
     public override void OnMoved()
     {
+        base.OnMoved();
+
         isTurretActive = false;
     }
 
@@ -77,7 +84,8 @@ public class Turret : BuildingObject
     void Shoot(Transform target)
     {
         Bullet bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, Quaternion.identity).GetComponent<Bullet>();
-        bullet.target = target;
+        bullet.SetBulletDamage(damage);
+        bullet.SetBulletTarget(target);
 
         Destroy(bullet.gameObject, 8f);
     }

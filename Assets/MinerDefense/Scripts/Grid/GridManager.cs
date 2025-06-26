@@ -32,6 +32,7 @@ public class GridManager : MonoBehaviour
                 Instantiate(backgroundTile, grid.GetWorldPosition(x, y) + new Vector3(0, 0, 1), Quaternion.identity, backgroundTileParent.transform);
     }
 
+    // GGrid tile class that store the position, grid ref, and buildingObject on the tile
     public class GridTile
     {
         private CustomGrid<GridTile> grid;
@@ -63,9 +64,23 @@ public class GridManager : MonoBehaviour
         }
     }
 
+    public int GetWidth() { return width; }
+    public int GetHeight() { return height; }
+
+    public bool IsEmpty()
+    {
+        for(int x = 0; x < width; x++)
+            for(int y = 0; y < height; y++)
+                if (!grid.GetGridObject(x, y).CanBuild()) return false;
+        
+        return true;
+    }
+
     public bool IsPlacementValid(Vector3 buildingPosition, BuildingTypeSO buildingData)
     {
         grid.GetXY(buildingPosition, out int xPos, out int yPos);
+
+        if (xPos == -1 || yPos == -1) return false;
 
         List<Vector2Int> gridPositionList = buildingData.GetGridPositionList(new Vector2Int(xPos, yPos));
 
@@ -76,9 +91,10 @@ public class GridManager : MonoBehaviour
         return true;
     }
 
-    public Vector3 AlignToGrid(Vector3 position)
+    public Vector3 AlignToGrid(Vector3 position, BuildingTypeSO buildingData)
     {
-        grid.GetXY(position, out int x, out int y);
+        // Offset the position to compensate the centered pivot point of the buildings
+        grid.GetXY(position + new Vector3(buildingData.width * cellSize * 0.5f, buildingData.height * cellSize * 0.5f), out int x, out int y);
         
         if (x == -1 || y == -1) return position;
 

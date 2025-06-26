@@ -33,6 +33,6 @@ public class GoldManager : MonoBehaviour
 
     public void UpdateGoldText()
     {
-        goldText.text = this.gold.ToString();
+        goldText.text = gold.ToString();
     }
 }

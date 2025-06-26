@@ -4,9 +4,9 @@ using UnityEngine;
 
 public abstract class BuildingObject : MonoBehaviour
 {
-    private GameObject buildingObjectGameObject;
     private BuildingTypeSO buildingTypeSO;
     private Vector2Int origin;
+    private bool isOnGrid = false;
 
     private int life;
     
@@ -17,7 +17,6 @@ public abstract class BuildingObject : MonoBehaviour
         BuildingObject buildingObject = buildingObjectGameObject.GetComponent<BuildingObject>();
 
         buildingObject.buildingTypeSO = buildingTypeSO;
-        buildingObject.buildingObjectGameObject = buildingObjectGameObject;
 
         GameManager gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
         buildingObject.life = gameManager.GetBuildingLife();
@@ -40,22 +39,19 @@ public abstract class BuildingObject : MonoBehaviour
         return buildingTypeSO;
     }
 
-    public GameObject GetBuildingGameObject()
-    {
-        return buildingObjectGameObject;
-    }
+    public bool IsOnGrid() { return isOnGrid; }
 
     public void TakeDamage(int damage)
     {
         life -= damage;
 
         if (life <= 0 )
-            Destroy(buildingObjectGameObject);
+            Destroy(gameObject);
     }
 
     // What to do when the building is placed on the grid
-    public virtual void OnPlaced() { }
+    public virtual void OnPlaced() { isOnGrid = true; }
 
     // What to do when the building is moved from one cell to another
-    public virtual void OnMoved() { }
+    public virtual void OnMoved() { isOnGrid = false; }
 }

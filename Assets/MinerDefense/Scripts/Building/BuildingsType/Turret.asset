@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Turret
   m_EditorClassIdentifier: 
   nameString: Turret
-  prefab: {fileID: 5755859436576618039, guid: e5016e9e9ffcfd345850181f08a0cf21, type: 3}
+  prefab: {fileID: 1639697623165382950, guid: 3dc35857761048e43bda3a96a0d9dbbd, type: 3}
   width: 1
   height: 1
   startingCost: 1

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Mine
   m_EditorClassIdentifier: 
   nameString: Mine
-  prefab: {fileID: 6334492844031683864, guid: a674ac4ae35c5c1489c206b7acb91c93, type: 3}
+  prefab: {fileID: 1804085848117155969, guid: 857a5182ef81bd24891369395eeff849, type: 3}
   width: 1
   height: 1
   startingCost: 1
