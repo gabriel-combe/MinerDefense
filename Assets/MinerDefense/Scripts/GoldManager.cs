@@ -20,11 +20,13 @@ public class GoldManager : MonoBehaviour
     }
 
     public int GetGold() {  return gold; }
+
     public void AddGold(int gold) 
     {
         this.gold += gold;
         UpdateGoldText();
     }
+
     public void RemoveGold(int gold)
     {
         this.gold -= gold;

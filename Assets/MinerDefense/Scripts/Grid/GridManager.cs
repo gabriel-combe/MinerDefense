@@ -32,7 +32,7 @@ public class GridManager : MonoBehaviour
                 Instantiate(backgroundTile, grid.GetWorldPosition(x, y) + new Vector3(0, 0, 1), Quaternion.identity, backgroundTileParent.transform);
     }
 
-    // GGrid tile class that store the position, grid ref, and buildingObject on the tile
+    // Grid tile class that store the position, grid ref, and buildingObject on the tile
     public class GridTile
     {
         private CustomGrid<GridTile> grid;
@@ -67,6 +67,7 @@ public class GridManager : MonoBehaviour
     public int GetWidth() { return width; }
     public int GetHeight() { return height; }
 
+    // Check if the grid is empty
     public bool IsEmpty()
     {
         for(int x = 0; x < width; x++)
@@ -76,6 +77,7 @@ public class GridManager : MonoBehaviour
         return true;
     }
 
+    // Check if there is no building on the tiles
     public bool IsPlacementValid(Vector3 buildingPosition, BuildingTypeSO buildingData)
     {
         grid.GetXY(buildingPosition, out int xPos, out int yPos);
@@ -101,6 +103,7 @@ public class GridManager : MonoBehaviour
         return grid.GetWorldPosition(x, y);
     }
 
+    // Place the building on the corresponding tiles
     public void PlaceBuilding(BuildingObject buildingObject)
     {
         grid.GetXY(buildingObject.transform.position, out int xPos, out int yPos);

@@ -39,6 +39,7 @@ public class BuildingDragDropManager : MonoBehaviour
         isDragging = true;
     }
 
+    // For futur, if we want to drag and drop building that are already on the grid
     private void HandleFingerDown(LeanFinger finger)
     {
         if (isDragging || finger.StartedOverGui) return;

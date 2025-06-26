@@ -31,6 +31,7 @@ public class UpgradeTurretAttackSpeed : MonoBehaviour
         UpdateCost();
     }
 
+    // Hide the upgrade button if there is not enough dollars
     private void Update()
     {
         if (upgradesCost > gameManager.GetDollars())
@@ -46,7 +47,7 @@ public class UpgradeTurretAttackSpeed : MonoBehaviour
         levelText.text = "Level " + gameManager.GetTurretAttackSpeedLevel().ToString();
     }
 
-    // On button clicked upgrade the stat and update the cost text
+    // On button clicked upgrade the stat and update the cost
     public void OnButtonClicked()
     {
         gameManager.UpgradeTurretAttackSpeed();

@@ -31,6 +31,7 @@ public class UpgradeTurretDamage : MonoBehaviour
         UpdateCost();
     }
 
+    // Hide the upgrade button if there is not enough dollars
     private void Update()
     {
         if (upgradesCost > gameManager.GetDollars())
@@ -46,7 +47,7 @@ public class UpgradeTurretDamage : MonoBehaviour
         levelText.text = "Level " + gameManager.GetTurretDamageLevel().ToString();
     }
 
-    // On button clicked upgrade the stat and update the cost text
+    // On button clicked upgrade the stat and update the cost
     public void OnButtonClicked()
     {
         gameManager.UpgradeTurretDamage();

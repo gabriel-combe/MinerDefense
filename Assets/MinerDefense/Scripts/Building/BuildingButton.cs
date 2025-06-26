@@ -31,6 +31,7 @@ public class BuildingButton : MonoBehaviour, IPointerDownHandler
         UpdateCostText();
     }
 
+    // Deactivate the button if we do not have enough gold
     private void Update()
     {
         if (goldManager.GetGold() <  cost)
@@ -40,6 +41,7 @@ public class BuildingButton : MonoBehaviour, IPointerDownHandler
 
     }
 
+    // When the button is pushed down create a building
     public void OnPointerDown(PointerEventData eventData)
     {
         if (!button.interactable) return;

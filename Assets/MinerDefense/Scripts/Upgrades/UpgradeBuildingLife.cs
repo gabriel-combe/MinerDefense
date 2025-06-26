@@ -31,6 +31,7 @@ public class UpgradeBuildingLife : MonoBehaviour
         UpdateCost();
     }
 
+    // Hide the upgrade button if there is not enough dollars
     private void Update()
     {
         if (upgradesCost > gameManager.GetDollars())
@@ -46,7 +47,7 @@ public class UpgradeBuildingLife : MonoBehaviour
         levelText.text = "Level " + gameManager.GetBuildingLifeLevel().ToString();
     }
 
-    // On button clicked upgrade the stat and update the cost text
+    // On button clicked upgrade the stat and update the cost
     public void OnButtonClicked()
     {
         gameManager.UpgradeBuildingLife();
